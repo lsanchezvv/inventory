@@ -1,0 +1,102 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: inventory-application
+host: localhost:10010
+basePath: /v1
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /user:
+    x-swagger-router-controller: user
+    get:
+      description: Gets a User.
+      operationId: getUser
+      parameters:
+        - name: id
+          in: query
+          description: The ID of the user to get.
+          required: true
+          type: string
+          format: ObjectId
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/User"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Creates a new user or updates an existing user.
+      # This will be handled by the `getUser()` funciton in src/api/controllers/user.js.
+      operationId: putUser
+      parameters:
+        - name: body
+          in: body
+          description: The new User object.
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/User"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /end-user:
+    x-swagger-router-controller: end-user-controller
+    post:
+      description: Creates a new enduser
+      operationId: createEndUser
+      parameters:
+        - name: end_user
+          in: body
+          description: end user object
+          required: true
+          schema:
+            required:
+              - name
+            properties:
+              name:
+                type: string
+      responses:
+        "201":
+          description: User created
+        "400":
+          description: Bad request. Usually validation errors.
+  # This makes it so you can get the swagger file from /api/v1/swagger.
+  /swagger:
+    x-swagger-pipe: swagger_raw
+
+# complex objects have schema definitions
+definitions:
+  User:
+    required:
+      - id
+      - username
+    properties:
+      id:
+        type: string
+        format: ObjectId
+      username:
+        type: string
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
