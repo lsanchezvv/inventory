@@ -17,9 +17,18 @@ exports.up = (knex, Promise) => knex.schema
     table.bigIncrements('id').primary()
     table.string('name', 255).notNullable()
   })
-  .createTable('end_user', (table) => {
+  .createTable('department', (table) => {
     table.bigIncrements('id').primary()
     table.string('name', 255).notNullable()
+  })
+  .createTable('end_user', (table) => {
+    table.bigIncrements('id').primary()
+    table.string('first_name', 255).notNullable()
+    table.string('last_name', 255).notNullable()
+    table.string('full_name', 255).notNullable()
+    table.bigInteger('department_id').notNullable()
+
+    table.foreign('department_id').references('id').on('department')
   })
   .createTable('item', (table) => {
     table.bigIncrements('id').primary()
