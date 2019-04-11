@@ -59,6 +59,14 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /end-user:
     x-swagger-router-controller: end-user-controller
+    get:
+      description: Returns a list of end usersGets all end users 
+      operationId: getAllEndUsers
+      responses:
+        "200": 
+          description: Success
+        "400":
+          description: Bad request.
     post:
       description: Creates a new enduser
       operationId: createEndUser
@@ -69,10 +77,17 @@ paths:
           required: true
           schema:
             required:
-              - name
+              - firstName
+              - lastName
+              - departmentId
             properties:
-              name:
+              firstName:
                 type: string
+              lastName:
+                type: string
+              departmentId:
+                type: integer
+
       responses:
         "201":
           description: User created
