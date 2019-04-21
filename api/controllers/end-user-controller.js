@@ -22,11 +22,26 @@ async function createEndUser (req, res, next) {
 
 }
 
-async function getAllEndUsers (req, res, next) {
+async function getAll (req, res, next) {
   try {
     const endUserList = await endUserDao.getAll()
-    console.log(endUserList)
-    res.status(200).send()
+    res.status(200).json({ users: endUserList })
+  } catch (error) {
+    console.log('getAllEndUsers(): an error has ocurred getting all users')
+    next()
+  }
+}
+
+async function get (req, res, next) {
+  const userId = req.swagger.params.id.value
+  console.log(userId)
+  try {
+    const user = await endUserDao.getById(userId)
+    if (user) {
+      res.status(200).json({ user })
+    } else {
+      res.status(400).send()
+    }
   } catch (error) {
     console.log('getAllEndUsers(): an error has ocurred getting all users')
     next()
@@ -35,7 +50,8 @@ async function getAllEndUsers (req, res, next) {
 
 const API = {
   createEndUser,
-  getAllEndUsers
+  getAll,
+  get
 }
 
 module.exports = API

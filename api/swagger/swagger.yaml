@@ -61,7 +61,7 @@ paths:
     x-swagger-router-controller: end-user-controller
     get:
       description: Returns a list of end usersGets all end users 
-      operationId: getAllEndUsers
+      operationId: getAll
       responses:
         "200": 
           description: Success
@@ -93,6 +93,21 @@ paths:
           description: User created
         "400":
           description: Bad request. Usually validation errors.
+  /end-user/{id}:
+    x-swagger-router-controller: end-user-controller
+    get:
+      description: Gets an end-user by Id
+      operationId: get
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+      responses:
+        "200": 
+          description: Success
+        "400":
+          description: Bad request.
   # This makes it so you can get the swagger file from /api/v1/swagger.
   /swagger:
     x-swagger-pipe: swagger_raw
