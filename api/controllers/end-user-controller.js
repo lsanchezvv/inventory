@@ -4,12 +4,12 @@ const endUserDao = require('../../db/dao/end-user-dao')
 
 
 async function createEndUser (req, res, next) {
-  const { firstName, lastName, departmentId } = req.swagger.params.end_user.value
+  const { first_name, last_name, department_id } = req.swagger.params.end_user.value
   const endUser = {
-    first_name: firstName,
-    last_name: lastName,
-    full_name: `${firstName} ${lastName}`,
-    department_id: departmentId
+    first_name,
+    last_name,
+    full_name: `${first_name} ${last_name}`,
+    department_id
   }
   try {
     const [endUserId] = await endUserDao.create(endUser)

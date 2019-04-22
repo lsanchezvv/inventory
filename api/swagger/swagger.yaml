@@ -12,51 +12,38 @@ consumes:
 produces:
   - application/json
 paths:
-  /user:
-    x-swagger-router-controller: user
-    get:
-      description: Gets a User.
-      operationId: getUser
-      parameters:
-        - name: id
-          in: query
-          description: The ID of the user to get.
-          required: true
-          type: string
-          format: ObjectId
-      responses:
-        "200":
-          description: Success
-          schema:
-            # a pointer to a definition
-            $ref: "#/definitions/User"
-        # responses may fall through to errors
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
+  /inventory-entry:
+    x-swagger-router-controller: inventory-controller
     post:
-      description: Creates a new user or updates an existing user.
-      # This will be handled by the `getUser()` funciton in src/api/controllers/user.js.
-      operationId: putUser
+      description: Creates a new inventory entry
+      operationId: create
       parameters:
-        - name: body
+        - name: inventory_entry
           in: body
-          description: The new User object.
+          description: inventory entry object
           required: true
           schema:
-            $ref: "#/definitions/User"
+            required:
+              - item_id
+              - status_id
+              - location_id
+              - end_user_id
+            properties:
+              item_id:
+                type: integer
+              status_id:
+                type: integer
+              location_id:
+                type: integer
+              end_user_id:
+                type: integer
+              comments:
+                type: string
       responses:
-        "200":
-          description: Success
-          schema:
-            # a pointer to a definition
-            $ref: "#/definitions/User"
-        # responses may fall through to errors
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
+        "201":
+          description: Record created
+        "400":
+          description: Bad request. Usually validation errors.
   /end-user:
     x-swagger-router-controller: end-user-controller
     get:
@@ -77,15 +64,15 @@ paths:
           required: true
           schema:
             required:
-              - firstName
-              - lastName
-              - departmentId
+              - first_name
+              - last_name
+              - department_id
             properties:
-              firstName:
+              first_name:
                 type: string
-              lastName:
+              last_name:
                 type: string
-              departmentId:
+              department_id:
                 type: integer
 
       responses:
@@ -112,21 +99,6 @@ paths:
   /swagger:
     x-swagger-pipe: swagger_raw
 
-# complex objects have schema definitions
-definitions:
-  User:
-    required:
-      - id
-      - username
-    properties:
-      id:
-        type: string
-        format: ObjectId
-      username:
-        type: string
-  ErrorResponse:
-    required:
-      - message
-    properties:
-      message:
-        type: string
+# # complex objects have schema definitions
+# definitions:
+
