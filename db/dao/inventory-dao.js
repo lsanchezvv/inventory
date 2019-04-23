@@ -19,7 +19,7 @@ async function getById (entryId, db = getDatabase()) {
   return entry
 }
 
-async function getAll () {
+async function getAll (db = getDatabase()) {
   return db.table('inventory').select()
 }
 

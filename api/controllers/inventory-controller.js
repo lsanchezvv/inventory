@@ -22,17 +22,24 @@ async function create (req, res, next) {
     console.log('Record created with Id: ', entryId)
     res.status(201).json({ id: entryId })
   } catch (error) {
-    console.log('createEndUser(): an error has ocurred creating the inventory entry: ', inventoryEntry, error.message)
+    console.log('create(): an error has ocurred creating the inventory entry: ', inventoryEntry, error.message)
     next()
 
   }
 }
 
-// async function get (req, res, next) {
+async function getAll (req, res, next) {
+  try {
+    const entries = await inventoryDao.getAll()
+    res.status(200).json({ entries })
 
-// }
+  } catch (error) {
+    console.log('get(): an error has ocurred getting the entries', error.message)
+    next()
+  }
+}
 
-// async function getAll (req, res, next) {
+// async function getById (req, res, next) {
 
 // }
 
@@ -42,8 +49,8 @@ async function create (req, res, next) {
 
 const API = {
   create,
-  // get,
-  // getAll,
+  getAll
+  // gegetByIdAll,
   // update
 }
 

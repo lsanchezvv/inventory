@@ -44,6 +44,14 @@ paths:
           description: Record created
         "400":
           description: Bad request. Usually validation errors.
+    get:
+      description: Returns a list of inventory entries
+      operationId: getAll
+      responses:
+        "200":
+          description: Success.
+        "400":
+          description: Bad request.
   /end-user:
     x-swagger-router-controller: end-user-controller
     get:
