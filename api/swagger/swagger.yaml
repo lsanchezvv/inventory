@@ -52,6 +52,38 @@ paths:
           description: Success.
         "400":
           description: Bad request.
+  /inventory-entry/{id}:
+    x-swagger-router-controller: inventory-controller
+    patch:
+      description: Updates an inventory entry
+      operationId: updateEntry
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: inventory_entry
+          in: body
+          description: inventory entry object
+          required: true
+          schema:
+            properties:
+              item_id:
+                type: string
+              status_id:
+                type: string
+              location_id:
+                type: string
+              end_user_id:
+                type: string
+              comments:
+                type: string     
+      responses:
+        "200":
+          description: Record updated
+        "400":
+          description: Bad request. Usually validation errors.
+
   /end-user:
     x-swagger-router-controller: end-user-controller
     get:
