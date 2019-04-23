@@ -14,7 +14,8 @@ async function update (endUserId, endUser, db = getDatabase()) {
 }
 
 async function getById (endUserId, db = getDatabase()) {
-  return db.table('end_user').select().where('id', endUserId)
+  const [user] = await db.table('end_user').select().where('id', endUserId)
+  return user
 
 }
 

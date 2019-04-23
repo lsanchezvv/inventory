@@ -8,9 +8,14 @@ const db = require('./db/db')
 
 async function InitApp () {
   await db.initDatabase()
-  const app = await initSwagger(appConfig)
-  app.listen(PORT)
-  console.log(`Listening on port ${PORT}`)
+  try {
+
+    const app = await initSwagger(appConfig)
+    app.listen(PORT)
+    console.log(`Listening on port ${PORT}`)
+  } catch (error) {
+    console.log(error, error.message)
+  }
 }
 
 InitApp()

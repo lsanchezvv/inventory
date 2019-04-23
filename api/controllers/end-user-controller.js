@@ -4,12 +4,12 @@ const endUserDao = require('../../db/dao/end-user-dao')
 
 
 async function createEndUser (req, res, next) {
-  const { firstName, lastName, departmentId } = req.swagger.params.end_user.value
+  const { first_name, last_name, department_id } = req.swagger.params.end_user.value
   const endUser = {
-    first_name: firstName,
-    last_name: lastName,
-    full_name: `${firstName} ${lastName}`,
-    department_id: departmentId
+    first_name,
+    last_name,
+    full_name: `${first_name} ${last_name}`,
+    department_id
   }
   try {
     const [endUserId] = await endUserDao.create(endUser)
@@ -22,11 +22,26 @@ async function createEndUser (req, res, next) {
 
 }
 
-async function getAllEndUsers (req, res, next) {
+async function getAll (req, res, next) {
   try {
     const endUserList = await endUserDao.getAll()
-    console.log(endUserList)
-    res.status(200).send()
+    res.status(200).json({ users: endUserList })
+  } catch (error) {
+    console.log('getAllEndUsers(): an error has ocurred getting all users')
+    next()
+  }
+}
+
+async function get (req, res, next) {
+  const userId = req.swagger.params.id.value
+  console.log(userId)
+  try {
+    const user = await endUserDao.getById(userId)
+    if (user) {
+      res.status(200).json({ user })
+    } else {
+      res.status(400).send()
+    }
   } catch (error) {
     console.log('getAllEndUsers(): an error has ocurred getting all users')
     next()
@@ -35,7 +50,8 @@ async function getAllEndUsers (req, res, next) {
 
 const API = {
   createEndUser,
-  getAllEndUsers
+  getAll,
+  get
 }
 
 module.exports = API
