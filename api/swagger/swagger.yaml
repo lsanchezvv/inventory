@@ -52,10 +52,41 @@ paths:
           description: Success.
         "400":
           description: Bad request.
+  /inventory-entry/{id}:
+    x-swagger-router-controller: inventory-controller
+    patch:
+      description: Updates an inventory entry
+      operationId: updateEntry
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: inventory_entry
+          in: body
+          description: inventory entry object
+          required: true
+          schema:
+            properties:
+              item_id:
+                type: string
+              status_id:
+                type: string
+              location_id:
+                type: string
+              end_user_id:
+                type: string
+              comments:
+                type: string     
+      responses:
+        "200":
+          description: Record updated
+        "400":
+          description: Bad request. Usually validation errors.
   /end-user:
     x-swagger-router-controller: end-user-controller
     get:
-      description: Returns a list of end usersGets all end users 
+      description: Returns a list of all end users 
       operationId: getAll
       responses:
         "200": 
@@ -100,9 +131,51 @@ paths:
           required: true
       responses:
         "200": 
-          description: Success
+          description: Success.
         "400":
           description: Bad request.
+  /item:
+    x-swagger-router-controller: item-controller
+    get:
+      description: Returns a list of all inventory items
+      operationId: getAll
+      responses:
+        "200":
+          description: Success.
+        "400":
+          description: Bad request.
+    post:
+      description: Creates an inventory item
+      operationId: create
+      parameters:
+        - name: item
+          in: body
+          description: item object
+          required: true
+          schema:
+            required:
+              - type_id
+              - brand_id
+              - model_no
+              - serial_no
+              - tag
+            properties:
+              type_id:
+                type: integer
+              brand_id:
+                type: integer
+              model_no:
+                type: string
+              serial_no:
+                type: string
+              tag:
+                type: string
+      responses:
+        "201":
+          description: Item created
+        "400":
+          description: Bad request. Usually validation errors.
+
   # This makes it so you can get the swagger file from /api/v1/swagger.
   /swagger:
     x-swagger-pipe: swagger_raw

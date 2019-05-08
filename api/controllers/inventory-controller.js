@@ -39,19 +39,25 @@ async function getAll (req, res, next) {
   }
 }
 
-// async function getById (req, res, next) {
 
-// }
+async function updateEntry (req, res, next) {
+  const id = req.swagger.params.id.value
+  const { inventory_entry } = req.swagger.params.inventory_entry.value
+  console.log(inventory_entry, id)
+  try {
+    const [updatedId] = await inventoryDao.update(id, inventory_entry)
+    res.status(200).json({ id: updatedId })
+  } catch (error) {
+    console.log('updateEntry(): an error has ocurred while updating the entry', error.message)
+    next()
+  }
 
-// async function update (req, res, next) {
-
-// }
+}
 
 const API = {
   create,
-  getAll
-  // gegetByIdAll,
-  // update
+  getAll,
+  updateEntry
 }
 
 module.exports = API
