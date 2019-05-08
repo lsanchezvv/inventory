@@ -1,17 +1,34 @@
 'use strict'
+// item [table]
+// id
+// type_id
+// brand_id
+// model_no
+// serial_no
+// tag
+// brand_id
+// type_id
 
-const db = require('../db')
+const { getDatabase } = require('../db')
 
-async function create () {
+async function create (item, db = getDatabase()) {
+  return db.table('item').insert(item).returning('id')
+}
+
+async function update (itemId, item, db = getDatabase()) {
+  return db.table('item')
+    .update(item)
+    .where('id', itemId)
+    .returning('id')
 
 }
 
-async function update () {
-
+async function getById (itemId, db = getDatabase()) {
+  const [item] = await db.table('item').select().where('id', itemId)
+  return item
 }
-
-async function getById () {
-
+async function getAll (db = getDatabase()) {
+  return db.table('item').select()
 }
 
 async function remove () {
@@ -19,7 +36,10 @@ async function remove () {
 }
 
 const API = {
-
+  create,
+  update,
+  getById,
+  getAll
 }
 
 module.exports = API
