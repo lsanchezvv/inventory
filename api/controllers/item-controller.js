@@ -28,6 +28,13 @@ async function get (req, res) {
 }
 
 async function getAll (req, res) {
+  try {
+    const items = await itemDao.getAll()
+    res.status(200).json({ items })
+  } catch (error) {
+    console.log('getAll(): an error has ocurred getting the entries', error.message)
+    next()
+  }
 
 }
 

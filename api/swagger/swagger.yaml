@@ -131,11 +131,19 @@ paths:
           required: true
       responses:
         "200": 
-          description: Success
+          description: Success.
         "400":
           description: Bad request.
   /item:
     x-swagger-router-controller: item-controller
+    get:
+      description: Returns a list of all inventory items
+      operationId: getAll
+      responses:
+        "200":
+          description: Success.
+        "400":
+          description: Bad request.
     post:
       description: Creates an inventory item
       operationId: create
