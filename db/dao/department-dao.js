@@ -1,17 +1,25 @@
 'use strict'
 
-const db = require('../db')
+const { getDatabase } = require('../db')
 
-async function create () {
-
+async function create (department, db = getDatabase()) {
+  return db.table('department').insert(department).returning('id')
 }
 
-async function update () {
-
+async function update (departmentId, department, db = getDatabase()) {
+  return db.table('department')
+    .update(department)
+    .where('id', departmentId)
+    .returning('id')
 }
 
-async function getById () {
+async function getById (departmentId, db = getDatabase()) {
+  const [department] = await db.table('department').select().where('id', departmentId)
+  return department
+}
 
+async function getDepartmentList (db = getDatabase()) {
+  return db.table('department').select()
 }
 
 async function remove () {
@@ -19,7 +27,10 @@ async function remove () {
 }
 
 const API = {
-
+  create,
+  update,
+  getById,
+  getDepartmentList
 }
 
 module.exports = API
