@@ -1,24 +1,35 @@
 'use strict'
 
-const db = require('../db')
+const { getDatabase } = require('../db')
 
-async function create () {
+async function create (location, db = getDatabase()) {
+  return db.table('location').insert(location).returning('id')
+}
+
+async function update (locationId, location, db = getDatabase()) {
+  return db.table('location')
+    .update(location)
+    .where('id', locationId)
+    .returning('id')
 
 }
 
-async function update () {
-
+async function getById (locationId, db = getDatabase()) {
+  const [location] = await db.table('location').select().where('id', locationId)
+  return location
 }
-
-async function getById () {
-
+async function getAll (db = getDatabase()) {
+  return db.table('location').select()
 }
-
 async function removeLocation () {
 
 }
 
 const API = {
+  create,
+  update,
+  getById,
+  getAll
 
 }
 
