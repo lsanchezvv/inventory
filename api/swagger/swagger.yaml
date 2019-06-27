@@ -175,7 +175,21 @@ paths:
           description: Item created
         "400":
           description: Bad request. Usually validation errors.
-
+  /item/{id}:
+    x-swagger-router-controller: item-controller
+    get:
+      description: Returns item by Id
+      operationId: get
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+      responses:
+        "200":
+          description: Success.
+        "400":
+          description: Bad request.
   # This makes it so you can get the swagger file from /api/v1/swagger.
   /swagger:
     x-swagger-pipe: swagger_raw

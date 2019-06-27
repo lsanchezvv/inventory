@@ -24,7 +24,14 @@ async function create (req, res) {
 }
 
 async function get (req, res) {
+  const id = req.swagger.params.id.value
+  try {
+    const item = await itemDao.getById(id)
+    console.log('Item obj', item)
+    res.status(200).json({ item })
+  } catch (error) {
 
+  }
 }
 
 async function getAll (req, res) {
