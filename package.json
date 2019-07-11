@@ -20,10 +20,16 @@
     "express": "^4.16.4",
     "knex": "^0.16.3",
     "pg": "^7.9.0",
-    "swagger-node-runner": "^0.7.3"
+    "swagger-node-runner": "^0.7.3",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
+    "eslint": "^6.0.1",
     "markdown-swagger": "^1.0.4",
-    "nodemon": "^1.18.11"
+    "nodemon": "^1.18.11",
+    "prettier-eslint": "^9.0.0",
+    "prettier-eslint-cli": "^5.0.0",
+    "snazzy": "^8.0.0",
+    "standard": "^13.0.0"
   }
 }
