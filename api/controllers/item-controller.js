@@ -1,6 +1,7 @@
 'use strict'
 
 const itemDao = require('../../db/dao/item-dao')
+const itemTypeDao = require('../../db/dao/item-type-dao')
 
 async function create (req, res) {
   const {
@@ -49,11 +50,22 @@ async function update (req, res) {
 
 }
 
+async function getAllItemTypes (req, res) {
+  try {
+    const itemTypes = await itemTypeDao.getAll()
+    res.status(200).json({ itemTypes })
+  } catch (error) {
+    console.log('getAllItemTypes(): an error has ocurred getting Item Types', error.message)
+    next()
+  }
+}
+
 const API = {
   create,
   get,
   getAll,
-  update
+  update,
+  getAllItemTypes
 }
 
 module.exports = API
