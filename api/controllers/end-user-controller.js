@@ -1,7 +1,7 @@
 'use strict'
 
 const endUserDao = require('../../db/dao/end-user-dao')
-
+const log = require('../helpers/logger').getLogger(__filename)
 
 async function createEndUser (req, res, next) {
   const { first_name, last_name, department_id } = req.swagger.params.end_user.value
@@ -13,7 +13,8 @@ async function createEndUser (req, res, next) {
   }
   try {
     const [endUserId] = await endUserDao.create(endUser)
-    console.log('enduser Created', endUserId)
+    console.log('logging')
+    log.info('createEndUser(): enduser Created', endUserId)
     res.status(201).json({ id: endUserId })
   } catch (err) {
     console.log('createEndUser(): an error has ocurred creating user: ', endUser, err.message)
@@ -55,3 +56,4 @@ const API = {
 }
 
 module.exports = API
+{ "level": "info", "message": "createEndUser(): enduser Created" }
