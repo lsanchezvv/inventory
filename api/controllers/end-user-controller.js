@@ -13,8 +13,7 @@ async function createEndUser (req, res, next) {
   }
   try {
     const [endUserId] = await endUserDao.create(endUser)
-    console.log('logging')
-    log.info('createEndUser(): enduser Created', endUserId)
+    console.log('createEndUser(): enduser Created', endUserId)
     res.status(201).json({ id: endUserId })
   } catch (err) {
     console.log('createEndUser(): an error has ocurred creating user: ', endUser, err.message)
