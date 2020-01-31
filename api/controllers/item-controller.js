@@ -20,7 +20,6 @@ async function create (req, res) {
   } catch (error) {
     console.log('create(): an error has ocurred creating the item: ', error.message)
     next()
-
   }
 }
 
